@@ -1,0 +1,18 @@
+body {
+    background-image: url('https://mecaluxes.cdnwm.com/blog/img/sistemas-de-almacenamiento.1.1.jpg?imwidth=2048&imdensity=1');
+    background-size: cover;
+    background-position: center;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .container-fluid {
+    height: 100%;
+    width: 100%;
+    background-image: url('https://mecaluxes.cdnwm.com/blog/img/sistemas-de-almacenamiento.1.1.jpg?imwidth=2048&imdensity=1');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }

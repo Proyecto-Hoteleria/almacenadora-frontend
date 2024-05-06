@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css"; // Importar estilos de Bootstrap
+import './ListaTareas.css';
 
 const ListaTareas = () => {
   const [tareas, setTareas] = useState([]);
