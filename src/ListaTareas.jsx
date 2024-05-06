@@ -1,30 +1,43 @@
-import React, { useState } from "react";
-import "bootstrap/dist/css/bootstrap.min.css"; // Importar estilos de Bootstrap
-import './ListaTareas.css';
+import React, { useState } from "react"; // Importa React y la función useState desde el módulo "react"
+import "bootstrap/dist/css/bootstrap.min.css"; // Importa los estilos de Bootstrap
+import './ListaTareas.css'; // Importa estilos personalizados para el componente
 
+/**
+ * Componente Funcional ListaTareas
+ * Representa una lista de tareas con funcionalidades para agregar, editar, marcar como realizada y eliminar tareas.
+ */
+
+/////////////////////////////////////////////////////Parte 1 ///////////////////////////////////////////////////
 const ListaTareas = () => {
-  const [tareas, setTareas] = useState([]);
-  const [nuevaTarea, setNuevaTarea] = useState({
+  // Estado para almacenar la lista de tareas y su manipulación
+  const [tareas, setTareas] = useState([]); // Almacena la lista de tareas
+  const [nuevaTarea, setNuevaTarea] = useState({ // Almacena la información de la nueva tarea
     nombre: "",
     descripcion: "",
     fechaInicio: "",
     fechaCierre: "",
     realizada: "No realizada", // Estado por defecto para la tarea
-    nombreApellido: "", // Cambio realizado: "Nombre y apellido" en lugar de "creador"
+    nombreApellido: "", // Nombre y apellido del creador
   });
 
-  const [editando, setEditando] = useState(false);
-  const [tareaEditada, setTareaEditada] = useState(null);
+  // Estado para manejar la edición de una tarea existente
+  const [editando, setEditando] = useState(false); // Indica si se está editando una tarea existente
+  const [tareaEditada, setTareaEditada] = useState(null); // Almacena la tarea que se está editando
 
+  // Función para manejar el envío del formulario
   const handleSubmit = (event) => {
-    event.preventDefault();
+    event.preventDefault(); // Evita el comportamiento por defecto del formulario
+
+    // Si se está editando una tarea
     if (editando) {
+      // Actualiza la lista de tareas reemplazando la tarea editada
       setTareas(
         tareas.map((tarea) =>
           tarea.id === tareaEditada.id ? { ...nuevaTarea, id: tarea.id } : tarea
         )
       );
 
+      // Reinicia los estados
       setEditando(false);
       setTareaEditada(null);
       setNuevaTarea({
@@ -36,8 +49,12 @@ const ListaTareas = () => {
         nombreApellido: "", // Reiniciar el nombre y apellido después de editar
       });
     } else if (nuevaTarea.nombre.trim()) {
-      const nuevaTareaConId = { ...nuevaTarea, id: Date.now() };
-      setTareas([...tareas, nuevaTareaConId]);
+      // Si no se está editando y el nombre de la nueva tarea no está vacío
+      // Agrega una nueva tarea a la lista de tareas
+      const nuevaTareaConId = { ...nuevaTarea, id: Date.now() }; // Asigna un ID único a la nueva tarea
+      setTareas([...tareas, nuevaTareaConId]); // Agrega la nueva tarea a la lista de tareas
+
+      // Reinicia el estado de nuevaTarea después de agregar
       setNuevaTarea({
         nombre: "",
         descripcion: "",
@@ -49,6 +66,16 @@ const ListaTareas = () => {
     }
   };
 
+////////////////////////////////////////////Concluye parte No.1////////////////////////////////////////////////////
+
+  
+  /////////////////////////////////////////////////////Pate no.2///////////////////////////////////////////////////
+
+// Función para cambiar el estado de una tarea entre "Realizada" y "No realizada"
+
+
+
+
   const toggleRealizada = (id) => {
     setTareas(
       tareas.map((tarea) =>
@@ -57,22 +84,34 @@ const ListaTareas = () => {
     );
   };
 
+  // Función para eliminar una tarea de la lista
   const eliminarTarea = async (id) => {
     setTareas(tareas.filter((tarea) => tarea.id !== id));
   };
 
+  // Función para preparar una tarea existente para su edición
   const editarTarea = (tarea) => {
-    setEditando(true);
-    setTareaEditada(tarea);
-    setNuevaTarea(tarea);
+    setEditando(true); // Establece el estado de edición a true
+    setTareaEditada(tarea); // Almacena la tarea que se está editando
+    setNuevaTarea(tarea); // Establece la tarea en el estado de nuevaTarea para su edición
   };
 
+
+  //////////////////////////////////////////////////////Parte concluida//////////////////////////////////////
+
+
+
+
+  // Renderizado del componente
   return (
-    <div className="container-fluid bg-dark min-vh-100 d-flex justify-content-center align-items-center">
-      <div className="card text-white bg-dark">
-        <div className="card-header">Lista de Tareas</div>
-        <div className="card-body">
+    <div className="container-fluid bg-dark min-vh-100 d-flex justify-content-center align-items-center"> {/* Contenedor principal */}
+      <div className="card text-white bg-dark"> {/* Tarjeta principal */}
+        <div className="card-header">Lista de Tareas</div> {/* Encabezado de la tarjeta */}
+        <div className="card-body"> {/* Cuerpo de la tarjeta */}
+          {/* Formulario para agregar o editar una tarea */}
           <form onSubmit={handleSubmit} className="row g-3">
+            {/* Campos del formulario */}
+            {/* Nombre de la tarea */}
             <div className="col-md-6">
               <label htmlFor="nombreTarea" className="form-label">Nombre de la tarea</label>
               <input
@@ -88,6 +127,7 @@ const ListaTareas = () => {
                 placeholder="Nombre de la tarea"
               />
             </div>
+            {/* Descripción de la tarea */}
             <div className="col-md-6">
               <label htmlFor="descripcionTarea" className="form-label">Descripción de la tarea</label>
               <textarea
@@ -100,6 +140,14 @@ const ListaTareas = () => {
                 placeholder="Descripción de la tarea"
               />
             </div>
+
+            {/*Conclucion para parte no.2*/}
+
+
+            
+            {/*inicio parte no.3*/}    
+            
+            {/* Fecha de inicio */}
             <div className="col-md-6">
               <label htmlFor="fechaInicioTarea" className="form-label">Fecha de Inicio</label>
               <input
@@ -112,6 +160,7 @@ const ListaTareas = () => {
                 }
               />
             </div>
+            {/* Fecha de cierre */}
             <div className="col-md-6">
               <label htmlFor="fechaCierreTarea" className="form-label">Fecha de Cierre</label>
               <input
@@ -124,6 +173,7 @@ const ListaTareas = () => {
                 }
               />
             </div>
+            {/* Estado de la tarea */}
             <div className="col-md-6">
               <label htmlFor="realizadaTarea" className="form-label">Estado</label>
               <select
@@ -138,6 +188,7 @@ const ListaTareas = () => {
                 <option value="Realizada">Realizada</option>
               </select>
             </div>
+            {/* Nombre y apellido del creador */}
             <div className="col-md-6">
               <label htmlFor="nombreApellidoTarea" className="form-label">Nombre y Apellido</label>
               <input
@@ -151,13 +202,17 @@ const ListaTareas = () => {
                 placeholder="Nombre y Apellido del Creador"
               />
             </div>
+            {/* Botón para agregar o editar una tarea */}
             <div className="col-12 mt-3">
               <button className="btn btn-primary" type="submit">
                 {editando ? "Guardar cambios" : "Agregar"}
               </button>
             </div>
           </form>
+
+          {/* Lista de tareas */}
           <ul className="list-group mt-3">
+            {/* Mapeo de la lista de tareas */}
             {tareas.map((tarea) => (
               <li
                 key={tarea.id}
@@ -170,6 +225,7 @@ const ListaTareas = () => {
                   color: "white",
                 }}
               >
+                {/* Información de la tarea */}
                 <div>
                   <strong>Nombre: </strong>{tarea.nombre}<br />
                   <strong>Descripción: </strong>{tarea.descripcion}<br />
@@ -178,13 +234,21 @@ const ListaTareas = () => {
                   <strong>Estado: </strong>{tarea.realizada}<br />
                   <strong>Nombre y Apellido: </strong>{tarea.nombreApellido} {/* Cambio reflejado aquí */}
                 </div>
+
+                {/*Finaliza parte 3*/}
+
+
+                {/*pARTE NUMERO no.2 */}
+                {/* Botones de acción */}
                 <div>
+                  {/* Botón para eliminar una tarea */}
                   <button
                     className="btn btn-danger me-2"
                     onClick={() => eliminarTarea(tarea.id)}
                   >
                     Eliminar
                   </button>
+                  {/* Botón para editar una tarea */}
                   <button
                     className="btn btn-info"
                     onClick={() => editarTarea(tarea)}
@@ -192,6 +256,8 @@ const ListaTareas = () => {
                     Editar
                   </button>
                 </div>
+
+                {/**Fin de parte nomero no.2 */}
               </li>
             ))}
           </ul>
@@ -201,4 +267,4 @@ const ListaTareas = () => {
   );
 };
 
-export default ListaTareas;
+export default ListaTareas; // Exporta el componente ListaTareas
